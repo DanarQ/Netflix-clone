@@ -27,12 +27,12 @@
   }
 
   .netflix-navbar__logo {
+    display: inline-flex;
+    align-items: center;
     flex-shrink: 0;
     color: #e50914;
     font-size: 32px;
-    font-weight: 900;
     line-height: 1;
-    letter-spacing: -1px;
   }
 
   .netflix-navbar__links {
@@ -197,7 +197,7 @@
     }
 
     .netflix-navbar__logo {
-      font-size: 27px;
+      font-size: 26px;
     }
 
     .netflix-navbar__desktop {

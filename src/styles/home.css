@@ -88,7 +88,10 @@
 @keyframes myflix-fade-in { from { opacity: 0; filter: brightness(.35); } }
 @keyframes mini-player-enter { from { opacity: 0; transform: translateY(20px) scale(.96); } }
 .profiles-page { min-height: 100vh; background: #141414; color: #fff; }
-.profiles-logo { position: absolute; top: 25px; left: 4%; color: #e50914; font-size: 30px; }
+.profiles-header { position: absolute; top: 0; left: 0; right: 0; height: 68px; padding-inline: 4%; display: flex; align-items: center; justify-content: space-between; z-index: 10; }
+.profiles-logo { display: inline-flex; align-items: center; color: #e50914; font-size: 32px; line-height: 1; }
+.profiles-account-link { color: #ccc; font-size: 14px; font-weight: 500; }
+.profiles-account-link:hover { color: white; text-decoration: underline; }
 .profiles-panel { display: flex; min-height: 100svh; padding: 110px 24px 120px; align-items: center; flex-direction: column; justify-content: center; }
 .profiles-panel h1 { margin-bottom: 30px; font-size: clamp(2.2rem, 3.5vw, 4rem); font-weight: 400; letter-spacing: 0; text-align: center; }
 .profiles-page h1:focus { outline: none; }
@@ -166,7 +169,8 @@
   .watch-control-row button { min-width: 38px; }
   .watch-time { margin-left: auto; }
   .mini-player { right: 16px; bottom: 16px; }
-  .profiles-logo { top: 20px; left: 20px; font-size: 28px; }
+  .profiles-header { height: 60px; padding-inline: 20px; }
+  .profiles-logo { font-size: 26px; }
   .profiles-panel { padding: 110px 20px 90px; }
   .profiles-panel h1 { margin-bottom: 28px; }
   .profiles-mode-button { margin-top: 42px; }

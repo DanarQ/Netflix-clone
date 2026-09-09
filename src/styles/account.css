@@ -1,7 +1,7 @@
 .account-page { min-height: 100vh; background: #fafafa; color: #161616; }
 .account-page p { color: #626262; }
-.account-header { height: 88px; padding: 0 5%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e5e5e5; }
-.account-logo { color: #e50914; font-size: 34px; }
+.account-header { height: 68px; padding-inline: 4%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e5e5e5; }
+.account-logo { display: inline-flex; align-items: center; color: #e50914; font-size: 32px; line-height: 1; }
 .account-header-profile { display: flex; align-items: center; gap: 10px; }
 .account-header-profile svg { width: 32px; height: 32px; }
 .account-layout { max-width: 1110px; margin: auto; padding: 44px 30px 50px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; }
@@ -74,12 +74,10 @@
 .account-footer > span { display: block; margin-top: 20px; font-size: 12px; color: #777; font-weight: 800; letter-spacing: .05em; }
 .account-page :is(a,button,input):focus-visible { outline: 2px solid #2457a7; outline-offset: 3px; }
 .account-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-.profiles-account-link { position: absolute; top: 34px; right: 4%; color: #ccc; font-size: 14px; }
-.profiles-account-link:hover { color: white; text-decoration: underline; }
-@media (max-width: 760px) {
-  .account-header { height: 72px; padding-inline: 24px; }
-  .account-logo { font-size: 28px; }
-  .account-layout { display: block; padding: 20px 24px 36px; }
+@media (max-width: 640px) {
+  .account-header { height: 60px; padding-inline: 20px; }
+  .account-logo { font-size: 26px; }
+  .account-layout { display: block; padding: 20px 20px 36px; }
   .account-sidebar { position: static; margin-bottom: 30px; }
   .account-back { margin-bottom: 14px; }
   .account-nav { flex-direction: row; gap: 4px; }

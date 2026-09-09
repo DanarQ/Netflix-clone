@@ -107,12 +107,14 @@ export default function ManageProfilesPage() {
 
   return (
     <main className="profiles-page">
-      <Link className="profiles-logo" to="/" aria-label="MYFLIX home">
-        <MyflixLogo />
-      </Link>
-      <Link className="profiles-account-link" to="/account">
-        Account
-      </Link>
+      <header className="profiles-header">
+        <Link className="profiles-logo" to="/" aria-label="MYFLIX home">
+          <MyflixLogo />
+        </Link>
+        <Link className="profiles-account-link" to="/account">
+          Account
+        </Link>
+      </header>
       {!draft ? (
         <section className="profiles-panel" aria-labelledby="profiles-heading">
           <h1 id="profiles-heading" ref={headingRef} tabIndex={-1}>
