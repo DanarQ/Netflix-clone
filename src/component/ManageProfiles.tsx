@@ -16,7 +16,7 @@ function PencilIcon() {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 5 4 4M4 20l1-5L16 4a2.8 2.8 0 0 1 4 4L9 19l-5 1Z" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
-function ProfileFace({ color, isKids }: { color: string; isKids?: boolean }) {
+export function ProfileFace({ color, isKids }: { color: string; isKids?: boolean }) {
   return (
     <svg viewBox="0 0 160 160" fill="none" aria-hidden="true">
       <rect width="160" height="160" rx="5" fill={color} />
@@ -34,8 +34,11 @@ export default function ManageProfiles() {
   const [params, setParams] = useSearchParams();
   const managing = params.get("mode") !== "select";
   const navigate = useNavigate();
-  const [draft, setDraft] = useState<Profile | null>(null);
-  const [isAdding, setIsAdding] = useState(false);
+  const addingFromAccount = params.get("add") === "true" && profiles.length < 5;
+  const [draft, setDraft] = useState<Profile | null>(() => addingFromAccount
+    ? { id: crypto.randomUUID(), name: "", color: avatarColors[profiles.length % avatarColors.length]!.value }
+    : profiles.find((profile) => profile.id === params.get("edit")) ?? null);
+  const [isAdding, setIsAdding] = useState(addingFromAccount);
   const [choosingIcon, setChoosingIcon] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [error, setError] = useState("");
@@ -48,6 +51,8 @@ export default function ManageProfiles() {
   }, [managing, draft?.id, confirmDelete]);
 
   const closeEditor = () => {
+    if (params.get("from") === "account-profiles") { navigate("/account/profiles"); return; }
+    if (params.get("from") === "account") { navigate("/account"); return; }
     setDraft(null);
     setError("");
     setChoosingIcon(false);
@@ -88,6 +93,7 @@ export default function ManageProfiles() {
   return (
     <main className="profiles-page">
       <Link className="profiles-logo" to="/" aria-label="MYFLIX home"><MyflixLogo /></Link>
+      <Link className="profiles-account-link" to="/account">Account</Link>
       {!draft ? (
         <section className="profiles-panel" aria-labelledby="profiles-heading">
           <h1 id="profiles-heading" ref={headingRef} tabIndex={-1}>{managing ? "Manage Profiles:" : "Who's watching?"}</h1>

@@ -6,6 +6,7 @@ import Navbar from "./component/Navbar";
 import Movies from "./component/Movies";
 import MiniPlayer from "./component/MiniPlayer";
 import ManageProfiles from "./component/ManageProfiles";
+import Account from "./component/Account";
 import WatchPage from "./component/WatchPage";
 import { movies, type Movie } from "./data/movies";
 
@@ -69,6 +70,7 @@ export function App() {
         setRestoreScrollY(Number.isFinite(saved) ? saved : 0);
       }} />} />
       <Route path="/manage-profiles" element={<ManageProfiles />} />
+      <Route path="/account/*" element={<Account />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
