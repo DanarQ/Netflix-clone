@@ -6,6 +6,8 @@
 
 Cinematic previews. A curated catalog. Playback that stays with you.
 
+**[Open the live demo](https://myflix-danarq.netlify.app)** — no login required.
+
 **React 19 · TypeScript · Bun · Tailwind CSS 4 · Prisma · SQLite**
 
 [Explore the interface](#screenshots) · [Run locally](#run-locally) · [Engineering decisions](#engineering-decisions) · [Architecture](AGENTS.md)
@@ -111,7 +113,9 @@ Run `bun run build`, then upload the `dist` folder through Netlify's manual depl
 
 The build includes an SPA rewrite (`_redirects`) and root-relative asset URLs so routes such as `/watch/interstellar` and `/account/profiles` work when opened directly. React startup supports both Bun hot reload and the static production build.
 
-No database credentials or SQLite upload are needed. The demo uses the bundled catalog and each visitor's browser storage. Netlify Free has usage limits and may pause the site when exhausted. A live deployment URL will be added after publishing is verified.
+No database credentials or SQLite upload are needed. The demo uses the bundled catalog and each visitor's browser storage. Netlify Free has usage limits and may pause the site when exhausted.
+
+Live demo: **[myflix-danarq.netlify.app](https://myflix-danarq.netlify.app)**. Published through Netlify Drop on September 9, 2026. The public home page and direct access to `/account/profiles` were verified in Chrome.
 
 ## Project map
 
