@@ -93,7 +93,7 @@ export function Navbar() {
           <Link to="/manage-profiles?mode=select">Switch Profiles</Link>
           <Link to="/manage-profiles">Manage Profiles</Link>
           <Link to="/account">Account</Link>
-          <a href="#help">Help Center</a>
+          <Link to="/help">Help Center</Link>
           <a className="netflix-navbar__sign-out" href="#sign-out">Sign out of Myflix</a>
         </nav>
       </details>

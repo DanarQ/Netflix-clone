@@ -7,6 +7,7 @@ import Movies from "./component/Movies";
 import MiniPlayer from "./component/MiniPlayer";
 import ManageProfiles from "./component/ManageProfiles";
 import Account from "./component/Account";
+import HelpCenter from "./component/HelpCenter";
 import WatchPage from "./component/WatchPage";
 import { movies, type Movie } from "./data/movies";
 
@@ -71,6 +72,7 @@ export function App() {
       }} />} />
       <Route path="/manage-profiles" element={<ManageProfiles />} />
       <Route path="/account/*" element={<Account />} />
+      <Route path="/help" element={<HelpCenter />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
