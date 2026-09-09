@@ -13,11 +13,15 @@ const result = await Bun.build({
   plugins: [tailwind],
   minify: true,
   target: "browser",
+  publicPath: "/",
   sourcemap: "linked",
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
   },
 });
+
+// Keep direct route visits working on static hosts (including manual Netlify uploads).
+await Bun.write(path.join(outdir, "_redirects"), "/* /index.html 200\n");
 
 for (const output of result.outputs) {
   console.log(` ${path.relative(process.cwd(), output.path)}  ${(output.size / 1024).toFixed(1)} KB`);

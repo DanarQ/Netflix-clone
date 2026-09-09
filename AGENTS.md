@@ -142,3 +142,7 @@ bun run db:studio
 ```
 
 Hero memakai `HeroTrailer.tsx` (YouTube IFrame API): mencoba autoplay bersuara, fallback mute saat diblokir browser, tombol suara/jeda, pause saat hero di luar viewport atau tab tersembunyi. Hero tidak dipasang saat modal detail atau player lain aktif agar audio tidak tumpang tindih.
+
+## Deploy demo statis
+
+`netlify.toml` memakai `bun run build` dan publish directory `dist`. Build memakai `publicPath: "/"` dan menulis `_redirects` untuk fallback SPA. Bootstrap React mendukung `import.meta.hot` opsional agar berjalan pada build statis. Demo Netlify menggunakan katalog bundled dan browser storage, tanpa menjalankan Prisma/SQLite. Gunakan paket Free; publikasi live harus diverifikasi terpisah dari build lokal.

@@ -105,6 +105,14 @@ Editing SQLite alone does **not** change the current UI. Seed scripts upsert rec
 
 `bun run start` serves through `src/index.ts`; it is not a static server for `dist/`. A deployment needs to account for this distinction and client-side route fallback.
 
+## Deploy the demo to Netlify Free
+
+Run `bun run build`, then upload the `dist` folder through Netlify's manual deployment flow. Alternatively, import this repository: `netlify.toml` sets the build command and publish directory. Use the Free plan and the included `netlify.app` address; no paid plan or purchased domain is needed for this demo.
+
+The build includes an SPA rewrite (`_redirects`) and root-relative asset URLs so routes such as `/watch/interstellar` and `/account/profiles` work when opened directly. React startup supports both Bun hot reload and the static production build.
+
+No database credentials or SQLite upload are needed. The demo uses the bundled catalog and each visitor's browser storage. Netlify Free has usage limits and may pause the site when exhausted. A live deployment URL will be added after publishing is verified.
+
 ## Project map
 
 ```text
