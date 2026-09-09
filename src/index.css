@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+.myflix-wordmark { display: block; width: auto; height: 1em; flex-shrink: 0; }
+
 @layer components {
   .netflix-navbar {
     position: sticky;
@@ -17,7 +19,6 @@
   .netflix-navbar__logo {
     flex-shrink: 0;
     color: #e50914;
-    font-family: Impact, "Arial Narrow", Arial, sans-serif;
     font-size: 32px;
     font-weight: 900;
     line-height: 1;
@@ -118,7 +119,7 @@
 
 @layer base {
   :root {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-synthesis: none;
     color: #f5f5f1;

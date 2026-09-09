@@ -1,4 +1,5 @@
 import "../index.css";
+import MyflixLogo from "./MyflixLogo";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -12,7 +13,7 @@ export function Navbar() {
   return (
     <header className="netflix-navbar">
       <a className="netflix-navbar__logo" href="/" aria-label="MYFLIX home">
-        MYFLIX
+        <MyflixLogo />
       </a>
 
       <nav className="netflix-navbar__desktop" aria-label="Navigasi utama">
