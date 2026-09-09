@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import MyflixLogo from "./MyflixLogo";
 import { readActiveProfile } from "../data/profiles";
@@ -14,6 +14,17 @@ const links = [
 export function Navbar() {
   const activeProfile = readActiveProfile();
   const profileRef = useRef<HTMLDetailsElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const closeProfileOnOutsideClick = (event: PointerEvent) => {
@@ -38,7 +49,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="netflix-navbar">
+    <header className={`netflix-navbar${isScrolled ? " netflix-navbar--scrolled" : ""}`}>
       <Link className="netflix-navbar__logo" to="/" aria-label="MYFLIX home">
         <MyflixLogo />
       </Link>
