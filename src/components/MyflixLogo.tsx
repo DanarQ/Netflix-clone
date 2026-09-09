@@ -1,6 +1,12 @@
 export default function MyflixLogo({ className = "" }: { className?: string }) {
   return (
-    <svg className={`myflix-wordmark ${className}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194 56" role="img" aria-label="MYFLIX">
+    <svg
+      className={`myflix-wordmark ${className}`}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 194 56"
+      role="img"
+      aria-label="MYFLIX"
+    >
       <g fill="#e50914">
         <path d="M2 54V2h10l9 24 9-24h10v47l-10 1V25l-9 23-9-23v28Z" />
         <path d="M44 2h11l7 19 7-19h11L67 33v14l-10 1V33Z" />
@@ -12,3 +18,4 @@ export default function MyflixLogo({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+

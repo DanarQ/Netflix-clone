@@ -1,4 +1,4 @@
-﻿.home-page { scroll-margin-top: 68px; }
+.home-page { scroll-margin-top: 68px; }
 .home-page button, .title-dialog button { cursor: pointer; }
 .home-page :is(button, a):focus-visible, .title-dialog button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 .skip-link { position: fixed; top: -80px; left: 20px; z-index: 100; padding: 12px 20px; background: #fff; color: #111; }
@@ -183,3 +183,4 @@
   .title-card { transition: none; }
   .watch-page, .watch-player, .mini-player, ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
+

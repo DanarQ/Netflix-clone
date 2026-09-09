@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router";
-import "../index.css";
 import MyflixLogo from "./MyflixLogo";
 import { readActiveProfile } from "../data/profiles";
 
@@ -8,8 +7,8 @@ const links = [
   { label: "Home", href: "#home" },
   { label: "Tv Shows", href: "#tvshows" },
   { label: "Movies", href: "#movies" },
-  {label: "Recently Watch", href: "#recentlywatch"},
-  {label: "My List", href: "#mylist"}
+  { label: "Recently Watch", href: "#recentlywatch" },
+  { label: "My List", href: "#mylist" },
 ];
 
 export function Navbar() {
@@ -55,12 +54,20 @@ export function Navbar() {
       </nav>
 
       <details className="netflix-navbar__mobile">
-        <summary>Browse <span aria-hidden="true">▾</span></summary>
+        <summary>
+          Browse <span aria-hidden="true">▾</span>
+        </summary>
         <nav aria-label="Navigasi seluler">
           {links.map(({ label, href }) => (
-            <a key={href} href={href} onClick={(event) => {
-              event.currentTarget.closest("details")?.removeAttribute("open");
-            }}>{label}</a>
+            <a
+              key={href}
+              href={href}
+              onClick={(event) => {
+                event.currentTarget.closest("details")?.removeAttribute("open");
+              }}
+            >
+              {label}
+            </a>
           ))}
         </nav>
       </details>
@@ -75,7 +82,9 @@ export function Navbar() {
               <path d="M9 21c4 4 10 4 15-1" stroke="white" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </span>
-          <span className="netflix-navbar__profile-arrow" aria-hidden="true">▾</span>
+          <span className="netflix-navbar__profile-arrow" aria-hidden="true">
+            ▾
+          </span>
         </summary>
 
         <nav className="netflix-navbar__profile-menu" aria-label="Menu profil">
@@ -94,7 +103,9 @@ export function Navbar() {
           <Link to="/manage-profiles">Manage Profiles</Link>
           <Link to="/account">Account</Link>
           <Link to="/help">Help Center</Link>
-          <a className="netflix-navbar__sign-out" href="#sign-out">Sign out of Myflix</a>
+          <a className="netflix-navbar__sign-out" href="#sign-out">
+            Sign out of Myflix
+          </a>
         </nav>
       </details>
     </header>
@@ -102,3 +113,4 @@ export function Navbar() {
 }
 
 export default Navbar;
+
