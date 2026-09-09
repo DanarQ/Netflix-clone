@@ -67,7 +67,7 @@ export default function MovieDetailModal({
                   onPlay(movie);
                 }}
               >
-                <span aria-hidden="true">▶</span> Play
+                <span aria-hidden="true">▶</span> Putar Trailer
               </button>
               <button
                 className="action-button action-secondary"
@@ -78,7 +78,7 @@ export default function MovieDetailModal({
               </button>
             </div>
             <p className="preview-note">
-              Video demo sementara. Sumber video akan dipindahkan ke backend Myflix.
+              Trailer YouTube, bukan film lengkap. <a href={movie.video} target="_blank" rel="noreferrer">Buka di YouTube</a>.
             </p>
           </div>
         </article>

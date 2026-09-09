@@ -81,6 +81,7 @@ export default function WatchPage({ onMinimize }: { onMinimize: (movie: Movie) =
     else void page.current?.requestFullscreen();
   };
 
+
   return (
     <main
       ref={page}

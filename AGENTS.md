@@ -12,6 +12,7 @@ Dokumen ini menjelaskan arsitektur sistem, struktur direktori, alur data, dan ko
 * **Styling**: Tailwind CSS v4 (`@import "tailwindcss";` via `bun-plugin-tailwind`) + Modular Scoped CSS
 * **Typography**: Bebas Neue (Hero & Brand), Helvetica Neue / Sans-Serif (Body & UI)
 * **Build System**: `Bun.build` (`build.ts`) dengan target browser modern
+* **Database & ORM**: Prisma ORM + SQLite (`prisma/schema.prisma`), dengan seed dari `src/data/`
 
 ---
 
@@ -22,6 +23,7 @@ Netflix-clone/
 ├── AGENTS.md                 # Dokumentasi arsitektur (file ini)
 ├── build.ts                  # Script bundle produksi menggunakan Bun.build
 ├── package.json              # Konfigurasi dependensi & scripts
+├── prisma/                   # Schema, migration SQLite, dan seed data awal
 ├── tsconfig.json             # Konfigurasi TypeScript (alias path: @/* -> ./src/*)
 └── src/
     ├── index.ts              # Server HTTP Bun (pengembang / mock API)
@@ -94,6 +96,12 @@ Aplikasi bersifat *client-first* dengan persistensi berbasis browser storage yan
    * `myflix-demo-membership` (`localStorage`): Menyimpan `{ plan: "Basic" | "Standard" | "Premium", cancelled: boolean }`.
 4. **Scroll Restoration Antara Beranda & Pemutar Video**:
    * `myflix-catalog-scroll` (`sessionStorage`): Saat pengguna memutar film dari katalog, posisi scroll Y disimpan. Saat kembali atau meminimalkan pemutar, posisi scroll dipulihkan seketika via `requestAnimationFrame` tanpa melompat ke atas.
+5. **Database SQLite**:
+   * Model `Movie`, `Profile`, `MyList`, `Membership`, `HelpTopic`, `HelpArticle`, dan `Account` dikelola Prisma.
+   * `prisma/seed.ts` mengimpor data awal dari `src/data/` menggunakan `upsert` dan menyimpan password akun sebagai hash bcrypt.
+   * UI saat ini masih menggunakan data client-first; database menjadi fondasi server untuk API/login berikutnya.
+   * Katalog nyata dan sinopsis Indonesia ada di `src/data/movies.ts`, sumber di `docs/movie-sources.md`. `bun run db:seed:movies` melakukan upsert khusus film tanpa mengubah akun/profil; baris demo lama dipertahankan di SQLite.
+   * `Movie.video` menyimpan URL trailer YouTube. `YouTubeTrailer.tsx` menyediakan embed untuk WatchPage/MiniPlayer; video langsung tetap memakai HTML5. Player YouTube dipasang sekali di App, di luar Routes; mode penuh/mini hanya mengubah ukuran container sehingga iframe tidak dimuat ulang. Perubahan SQLite saja belum tercermin di UI.
 
 ---
 
@@ -108,7 +116,7 @@ Aplikasi bersifat *client-first* dengan persistensi berbasis browser storage yan
    * Dilengkapi *Skip Link* (`.skip-link`) untuk navigasi pembaca layar.
    * Menghargai preferensi pengguna terhadap animasi melalui `@media (prefers-reduced-motion: reduce)`.
 3. **Performa & Animasi**:
-   * Navigasi antar-halaman mendukung `viewTransition: true` dari React Router untuk transisi halus antar-state (seperti katalog ke video player).
+   * Navigasi umum mendukung `viewTransition: true`. Player YouTube memakai transisi ukuran CSS pada container persisten di luar Routes; navigasi player tidak memakai snapshot View Transitions agar video tetap hidup.
    * Gambar poster menggunakan `loading="lazy"`, sedangkan gambar hero banner utama menggunakan `fetchPriority="high"`.
 
 ---
@@ -124,5 +132,13 @@ bun run build
 
 # Menjalankan server dalam mode produksi
 bun run start
+
+# Membuat migration dan mengisi data awal
+bun run db:migrate -- --name nama_migration
+bun run db:seed
+
+# Membuka editor data Prisma
+bun run db:studio
 ```
 
+Hero memakai `HeroTrailer.tsx` (YouTube IFrame API): mencoba autoplay bersuara, fallback mute saat diblokir browser, tombol suara/jeda, pause saat hero di luar viewport atau tab tersembunyi. Hero tidak dipasang saat modal detail atau player lain aktif agar audio tidak tumpang tindih.

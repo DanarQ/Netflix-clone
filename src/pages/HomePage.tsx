@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import HeroTrailer from "../components/HeroTrailer";
 import Navbar from "../components/Navbar";
 import MovieRow from "../components/MovieRow";
 import MovieDetailModal from "../components/MovieDetailModal";
@@ -23,11 +24,13 @@ function readMyList(): string[] {
 
 export default function HomePage({
   miniMovie,
+  hasActiveTrailer = false,
   restoreScrollY,
   onScrollRestored,
   onCloseMini,
 }: {
   miniMovie: Movie | null;
+  hasActiveTrailer?: boolean;
   restoreScrollY: number | null;
   onScrollRestored: () => void;
   onCloseMini: () => void;
@@ -55,7 +58,7 @@ export default function HomePage({
 
   const handlePlay = (movie: Movie) => {
     sessionStorage.setItem("myflix-catalog-scroll", String(window.scrollY));
-    navigate(`/watch/${movie.id}`, { viewTransition: true });
+    navigate(`/watch/${movie.id}`);
   };
 
   const toggleList = (movie: Movie) => {
@@ -74,23 +77,22 @@ export default function HomePage({
       <main id="home" className="home-page">
         <section className="home-hero" aria-labelledby="featured-title">
           <img className="hero-image" src={featured.image} alt="" fetchPriority="high" />
+          {!hasActiveTrailer && !miniMovie && !selected && <HeroTrailer movie={featured} />}
           <div className="hero-content">
             <p className="original-label">
-              <MyflixLogo className="original-label__brand" /> SERIES
+              <MyflixLogo className="original-label__brand" /> {featured.type.toUpperCase()}
             </p>
-            <p className="hero-eyebrow">WONDER IS JUST BEYOND THE UNKNOWN</p>
+            <p className="hero-eyebrow">TRAILER PILIHAN</p>
             <h1 id="featured-title">
-              THE LAST
-              <br />
-              FRONTIER
+              {featured.name}
             </h1>
             <p className="hero-meta">
-              ADVENTURE <span>13+</span> SERIES <span>HD</span>
+              {featured.genre} <span>{featured.type}</span> <span>TRAILER</span>
             </p>
             <p className="hero-description">{featured.description}</p>
             <div className="hero-actions">
               <button className="action-button action-primary" onClick={() => handlePlay(featured)}>
-                <span aria-hidden="true">▶</span> Play
+                <span aria-hidden="true">▶</span> Putar Trailer
               </button>
               <button className="action-button action-secondary" onClick={() => setSelected(featured)}>
                 <span aria-hidden="true">ⓘ</span> More Info
@@ -104,11 +106,10 @@ export default function HomePage({
               </button>
             </div>
           </div>
-          <span className="hero-side-label">ADVENTURE / MYSTERY</span>
         </section>
 
         <div className="home-catalog">
-          <MovieRow id="trending" heading="Trending Now" items={movies} onSelect={setSelected} />
+          <MovieRow id="trending" heading="Trailer Pilihan" items={movies.filter((_, index) => index < 8 || index % 3 === 0)} onSelect={setSelected} />
           <MovieRow
             id="tvshows"
             heading="TV Shows"
@@ -121,6 +122,14 @@ export default function HomePage({
             items={movies.filter((title) => title.type === "Film")}
             onSelect={setSelected}
           />
+          {[
+            { id: "animation", heading: "Dunia Animasi", genres: ["Animation"] },
+            { id: "adventure", heading: "Aksi & Petualangan", genres: ["Action", "Adventure"] },
+            { id: "fantasy", heading: "Sci-Fi & Fantasi", genres: ["Science Fiction", "Fantasy"] },
+            { id: "thriller", heading: "Misteri & Ketegangan", genres: ["Thriller", "Mystery", "Horror"] },
+            { id: "drama", heading: "Kisah yang Membekas", genres: ["Drama", "Documentary"] },
+          ].map(row => <MovieRow key={row.id} id={row.id} heading={row.heading}
+            items={movies.filter(movie => row.genres.includes(movie.genre))} onSelect={setSelected} />)}
           <MovieRow
             id="recentlywatch"
             heading="Recently Watched"
@@ -140,7 +149,7 @@ export default function HomePage({
 
       <footer className="home-footer">
         <a href="#home">MYFLIX</a>
-        <p>Proyek Netflix clone · Katalog ilustrasi dengan video demo.</p>
+        <p>Proyek Netflix clone · Katalog film dengan trailer YouTube.</p>
       </footer>
 
       <MovieDetailModal

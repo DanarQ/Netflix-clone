@@ -6,6 +6,12 @@ out
 dist
 *.tgz
 
+# SQLite
+*.db
+*.db-journal
+prisma/*.db
+prisma/*.db-journal
+
 # code coverage
 coverage
 *.lcov
@@ -23,6 +29,7 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .env.local
 
 # caches
+.playwright-cli/
 .eslintcache
 .cache
 *.tsbuildinfo

@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Movie {
+  id          String   @id
+  name        String
+  genre       String
+  type        String // "Series" | "Film"
+  image       String
+  video       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  myLists     MyList[]
+}
+
+model Profile {
+  id        String   @id
+  name      String
+  color     String
+  isKids    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  myLists   MyList[]
+}
+
+model MyList {
+  id        String   @id @default(cuid())
+  profileId String
+  movieId   String
+  createdAt DateTime @default(now())
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  movie   Movie   @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, movieId])
+}
+
+model Membership {
+  id        String   @id @default("default")
+  plan      String   @default("Standard") // "Basic" | "Standard" | "Premium"
+  cancelled Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+}
+
+model HelpTopic {
+  id       String        @id
+  title    String
+  icon     String
+  position Int
+  articles HelpArticle[]
+}
+
+model HelpArticle {
+  id       String @id
+  topicId  String
+  title    String
+  text     String
+  to       String
+  action   String
+  position Int
+
+  topic HelpTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@index([topicId, position])
+}
+
+model Account {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
