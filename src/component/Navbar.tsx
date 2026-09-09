@@ -1,5 +1,8 @@
+import { useEffect, useRef } from "react";
+import { Link } from "react-router";
 import "../index.css";
 import MyflixLogo from "./MyflixLogo";
+import { readActiveProfile } from "../data/profiles";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -10,11 +13,36 @@ const links = [
 ];
 
 export function Navbar() {
+  const activeProfile = readActiveProfile();
+  const profileRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    const closeProfileOnOutsideClick = (event: PointerEvent) => {
+      if (!profileRef.current?.contains(event.target as Node)) {
+        profileRef.current?.removeAttribute("open");
+      }
+    };
+
+    const closeProfileOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        profileRef.current?.removeAttribute("open");
+      }
+    };
+
+    document.addEventListener("pointerdown", closeProfileOnOutsideClick);
+    document.addEventListener("keydown", closeProfileOnEscape);
+
+    return () => {
+      document.removeEventListener("pointerdown", closeProfileOnOutsideClick);
+      document.removeEventListener("keydown", closeProfileOnEscape);
+    };
+  }, []);
+
   return (
     <header className="netflix-navbar">
-      <a className="netflix-navbar__logo" href="/" aria-label="MYFLIX home">
+      <Link className="netflix-navbar__logo" to="/" aria-label="MYFLIX home">
         <MyflixLogo />
-      </a>
+      </Link>
 
       <nav className="netflix-navbar__desktop" aria-label="Navigasi utama">
         <ul className="netflix-navbar__links">
@@ -37,14 +65,38 @@ export function Navbar() {
         </nav>
       </details>
 
-      <div className="netflix-navbar__profile" role="img" aria-label="Profil pengguna">
-        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <rect width="32" height="32" rx="4" fill="#147d92" />
-          <circle cx="10" cy="12" r="2" fill="white" />
-          <circle cx="23" cy="12" r="2" fill="white" />
-          <path d="M9 21c4 4 10 4 15-1" stroke="white" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-      </div>
+      <details ref={profileRef} className="netflix-navbar__profile">
+        <summary aria-label="Buka menu profil pengguna">
+          <span className="netflix-navbar__avatar" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <rect width="32" height="32" rx="4" fill={activeProfile.color} />
+              <circle cx="10" cy="12" r="2" fill="white" />
+              <circle cx="23" cy="12" r="2" fill="white" />
+              <path d="M9 21c4 4 10 4 15-1" stroke="white" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </span>
+          <span className="netflix-navbar__profile-arrow" aria-hidden="true">▾</span>
+        </summary>
+
+        <nav className="netflix-navbar__profile-menu" aria-label="Menu profil">
+          <div className="netflix-navbar__profile-user">
+            <span className="netflix-navbar__avatar" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none">
+                <rect width="32" height="32" rx="4" fill={activeProfile.color} />
+                <circle cx="10" cy="12" r="2" fill="white" />
+                <circle cx="23" cy="12" r="2" fill="white" />
+                <path d="M9 21c4 4 10 4 15-1" stroke="white" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </span>
+            <span>{activeProfile.name}</span>
+          </div>
+          <Link to="/manage-profiles?mode=select">Switch Profiles</Link>
+          <Link to="/manage-profiles">Manage Profiles</Link>
+          <a href="#account">Account</a>
+          <a href="#help">Help Center</a>
+          <a className="netflix-navbar__sign-out" href="#sign-out">Sign out of Myflix</a>
+        </nav>
+      </details>
     </header>
   );
 }

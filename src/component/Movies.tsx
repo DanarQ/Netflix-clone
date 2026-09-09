@@ -13,7 +13,7 @@ function readMyList(): string[] {
 }
 
 
-export default function Movies() {
+export default function Movies({ onPlay }: { onPlay: (movie: Movie) => void }) {
   const [myList, setMyList] = useState<string[]>(readMyList);
   const [selected, setSelected] = useState<Movie | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -41,7 +41,8 @@ export default function Movies() {
           <p className="hero-meta">ADVENTURE <span>13+</span> SERIES <span>HD</span></p>
           <p className="hero-description">{featured.description}</p>
           <div className="hero-actions">
-            <button className="action-button action-primary" onClick={() => setSelected(featured)}><span aria-hidden="true">ⓘ</span> More Info</button>
+            <button className="action-button action-primary" onClick={() => onPlay(featured)}><span aria-hidden="true">▶</span> Play</button>
+            <button className="action-button action-secondary" onClick={() => setSelected(featured)}><span aria-hidden="true">ⓘ</span> More Info</button>
             <button className="action-button action-secondary" aria-pressed={myList.includes(featured.id)} onClick={() => toggleList(featured)}><span aria-hidden="true">{myList.includes(featured.id) ? "✓" : "+"}</span> My List</button>
           </div>
         </div>
@@ -63,8 +64,11 @@ export default function Movies() {
           <h2 id="detail-title">{selected.name}</h2>
           <p className="dialog-meta">{selected.genre} · {selected.type}</p>
           <p>{selected.description}</p>
-          <button className="action-button action-primary" aria-pressed={myList.includes(selected.id)} onClick={() => toggleList(selected)}>{myList.includes(selected.id) ? "✓ Added to My List" : "+ My List"}</button>
-          <p className="preview-note">Judul contoh untuk pratinjau katalog. Video belum tersedia.</p>
+          <div className="dialog-actions">
+            <button className="action-button action-primary" onClick={() => { dialog.current?.close(); onPlay(selected); }}><span aria-hidden="true">▶</span> Play</button>
+            <button className="action-button action-secondary" aria-pressed={myList.includes(selected.id)} onClick={() => toggleList(selected)}>{myList.includes(selected.id) ? "✓ Added to My List" : "+ My List"}</button>
+          </div>
+          <p className="preview-note">Video demo sementara. Sumber video akan dipindahkan ke backend Myflix.</p>
         </div>
       </article>}
     </dialog>

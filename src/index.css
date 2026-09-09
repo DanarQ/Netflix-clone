@@ -46,10 +46,93 @@
   }
 
   .netflix-navbar__profile {
-    width: 32px;
-    height: 32px;
+    position: relative;
     margin-left: auto;
     flex-shrink: 0;
+  }
+
+  .netflix-navbar__profile summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .netflix-navbar__profile summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .netflix-navbar__avatar {
+    display: block;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .netflix-navbar__avatar svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .netflix-navbar__profile-arrow {
+    font-size: 12px;
+    transition: transform 160ms ease;
+  }
+
+  .netflix-navbar__profile[open] .netflix-navbar__profile-arrow {
+    transform: rotate(180deg);
+  }
+
+  .netflix-navbar__profile-menu {
+    position: absolute;
+    top: calc(100% + 16px);
+    right: 0;
+    width: 210px;
+    padding-top: 8px;
+    border: 1px solid #383838;
+    background: rgba(20, 20, 20, 0.98);
+    box-shadow: 0 12px 28px #0008;
+  }
+
+  .netflix-navbar__profile-menu::before {
+    position: absolute;
+    top: -7px;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    background: #141414;
+    border-top: 1px solid #383838;
+    border-left: 1px solid #383838;
+    content: "";
+    transform: rotate(45deg);
+  }
+
+  .netflix-navbar__profile-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .netflix-navbar__profile-menu a {
+    display: block;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .netflix-navbar__profile-menu a:hover {
+    text-decoration: underline;
+  }
+
+  .netflix-navbar__profile-menu .netflix-navbar__sign-out {
+    margin-top: 8px;
+    padding-block: 13px;
+    border-top: 1px solid #383838;
+    text-align: center;
   }
 
   .netflix-navbar__mobile {
@@ -113,6 +196,14 @@
 
     .netflix-navbar__mobile {
       display: block;
+    }
+
+    .netflix-navbar__profile-arrow {
+      display: none;
+    }
+
+    .netflix-navbar__profile-menu {
+      right: -4px;
     }
   }
 }
